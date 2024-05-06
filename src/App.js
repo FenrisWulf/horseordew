@@ -24,9 +24,9 @@ const QuizItem = ({ name, isHorse, onClick, questionString }) => {
             flexDirection: "column",
             justifyContent: "space-around",
           }}
-          onClick={() => onClick(false)}
+          onClick={() => onClick(true)}
         >
-          Mountain Dew {sodaEmoji}
+          Horse {horseEmoji}
         </div>
         <div
           className="button"
@@ -39,9 +39,9 @@ const QuizItem = ({ name, isHorse, onClick, questionString }) => {
             flexDirection: "column",
             justifyContent: "space-around",
           }}
-          onClick={() => onClick(true)}
+          onClick={() => onClick(false)}
         >
-          Horse {horseEmoji}
+          Mountain Dew {sodaEmoji}
         </div>
       </div>
     </div>
@@ -109,10 +109,10 @@ function App() {
   return (
     <div className="App">
       <ToastContainer />
-      <h1 style={{ fontSize: "48px" }}>Dew or Derby?</h1>
+      <h1 style={{ fontSize: "48px" }}>Derby or Dew?</h1>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <h1>
-          Is this a name of a Mountain Dew Flavor or a Kentucky Derby Horse?
+          Is this a name of a Kentucky Derby Horse or a Mountain Dew Flavor?
         </h1>
         {lastResult !== null ? (
           <div
