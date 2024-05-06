@@ -199,8 +199,15 @@ function App() {
           questionString={`${curQuestion + 1} / ${quizData.length}`}
         />
       )}
-      <div style={{ position: "absolute", bottom: 0 }}>
-        By FenrisWulf (fenriswoolf@gmail.com)
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "end",
+          height: "100",
+          paddingTop: "32px",
+        }}
+      >
+        <div>By FenrisWulf (fenriswoolf@gmail.com)</div>
       </div>
     </div>
   );
