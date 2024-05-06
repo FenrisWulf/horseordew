@@ -48,6 +48,9 @@
   &:hover {
     background: #eef;
   }
+  &:active {
+    background: #0000ff59;
+  }
 }
 
 @keyframes App-logo-spin {
