@@ -16,6 +16,7 @@ const QuizItem = ({ name, isHorse, onClick, questionString }) => {
         <div
           className="button"
           style={{
+            width: "100%",
             border: "solid 1px black",
             height: "200px",
             flexGrow: "1",
@@ -31,6 +32,7 @@ const QuizItem = ({ name, isHorse, onClick, questionString }) => {
         <div
           className="button"
           style={{
+            width: "100%",
             border: "solid 1px black",
             height: "200px",
             flexGrow: "1",
