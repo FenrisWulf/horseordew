@@ -98,7 +98,7 @@ function App() {
   const shareEmojis = results.map((cur, i) => {
     return cur === quizData[i].isHorse ? greenEmoji : redEmoji;
   });
-  const shareString = `dewOrDerby.com My score ${numCorrect} / ${quizData.length} ${shareEmojis}`;
+  const shareString = `derbyOrDew.com My score ${numCorrect} / ${quizData.length} ${shareEmojis}`;
   const copyToClipboard = () => {
     navigator.clipboard.writeText(shareString);
     toast("Copied to clipboard!", { hideProgressBar: true });
