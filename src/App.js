@@ -128,22 +128,29 @@ function App() {
             }}
             className={rightOrWrongCN}
           >
-            <RightOrWrong result={lastResult} isHorse={lastData.isHorse} />
-            <span style={{ fontWeight: "bold" }}>
-              {lastData.name}&nbsp;
-            </span>{" "}
-            <span>is a</span>
-            {lastData.isHorse ? (
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <RightOrWrong result={lastResult} isHorse={lastData.isHorse} />
               <div>
-                <span style={{ fontWeight: "bold" }}> &nbsp;Horse</span>
-                <span>{` name ${horseEmoji}`}</span>
+                <span style={{ fontWeight: "bold" }}>
+                  {lastData.name}&nbsp;
+                </span>{" "}
+                <span>is a</span>
+                {lastData.isHorse ? (
+                  <div>
+                    <span style={{ fontWeight: "bold" }}> &nbsp;Horse</span>
+                    <span>{` name ${horseEmoji}`}</span>
+                  </div>
+                ) : (
+                  <div>
+                    <span style={{ fontWeight: "bold" }}>
+                      {" "}
+                      &nbsp;Mountain Dew
+                    </span>
+                    <span>{` flavor ${sodaEmoji}`}</span>
+                  </div>
+                )}
               </div>
-            ) : (
-              <div>
-                <span style={{ fontWeight: "bold" }}> &nbsp;Mountain Dew</span>
-                <span>{` flavor ${sodaEmoji}`}</span>
-              </div>
-            )}
+            </div>
           </div>
         ) : (
           <div
