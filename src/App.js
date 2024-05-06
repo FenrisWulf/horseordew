@@ -3,29 +3,16 @@ import "./App.css";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+const horseEmoji = String.fromCodePoint(0x1f40e);
+const sodaEmoji = String.fromCodePoint(0x1f964);
 
 const QuizItem = ({ name, isHorse, onClick, questionString }) => {
   return (
     <div>
-      <h2 style={{ display: "flex", justifyContent: "center", flexGrow: "1" }}>
+      <h1 style={{ display: "flex", justifyContent: "center", flexGrow: "1" }}>
         <div style={{ flexGrow: 1 }}>{name}</div> <div>{questionString}</div>
-      </h2>
+      </h1>
       <div style={{ display: "flex" }}>
-        <div
-          className="button"
-          style={{
-            border: "solid 1px black",
-            height: "200px",
-            flexGrow: "1",
-            cursor: "pointer",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-around",
-          }}
-          onClick={() => onClick(true)}
-        >
-          Horse
-        </div>
         <div
           className="button"
           style={{
@@ -39,7 +26,22 @@ const QuizItem = ({ name, isHorse, onClick, questionString }) => {
           }}
           onClick={() => onClick(false)}
         >
-          Dew
+          Mountain Dew {sodaEmoji}
+        </div>
+        <div
+          className="button"
+          style={{
+            border: "solid 1px black",
+            height: "200px",
+            flexGrow: "1",
+            cursor: "pointer",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
+          }}
+          onClick={() => onClick(true)}
+        >
+          Horse {horseEmoji}
         </div>
       </div>
     </div>
@@ -60,6 +62,8 @@ const RightOrWrong = ({ result, isHorse }) => {
 };
 function App() {
   const [curQuestion, setCurQuestion] = useState(0);
+  const [isFading, setIsFading] = useState(false);
+  const [isFadingOut, setIsFadingOut] = useState(false);
   const [results, setResults] = useState([]);
   const quizData = [
     { isHorse: true, name: "California Chrome" },
@@ -81,11 +85,9 @@ function App() {
   ];
 
   const cur = quizData[curQuestion];
-  const lastResult = curQuestion > 0 ? results[curQuestion - 1] : null;
+  const resultAnser = isFading ? curQuestion - 2 : curQuestion - 1;
+  const lastResult = curQuestion > 0 ? results[resultAnser] : null;
   const lastData = quizData[curQuestion - 1];
-  console.log("results, results", results);
-  console.log("lastResult", lastResult);
-  console.log("curQuestion", results[curQuestion - 1]);
   const isFinished = curQuestion === quizData.length;
   const numCorrect = results.reduce(
     (agg, cur, i) => agg + (cur === quizData[i].isHorse ? 1 : 0),
@@ -93,23 +95,24 @@ function App() {
   );
   const redEmoji = String.fromCodePoint(0x1f534);
   const greenEmoji = String.fromCodePoint(0x1f7e2);
-  const horseEmoji = String.fromCodePoint(0x1f40e);
-  const sodaEmoji = String.fromCodePoint(0x1f964);
   const shareEmojis = results.map((cur, i) => {
     return cur === quizData[i].isHorse ? greenEmoji : redEmoji;
   });
-  const shareString = `horseOrDew.com My score ${numCorrect} / ${quizData.length} ${shareEmojis}`;
+  const shareString = `dewOrDerby.com My score ${numCorrect} / ${quizData.length} ${shareEmojis}`;
   const copyToClipboard = () => {
     navigator.clipboard.writeText(shareString);
     toast("Copied to clipboard!", { hideProgressBar: true });
   };
+
+  const rightOrWrongCN = "rightOrWrong" + (isFadingOut ? " fadeOut" : "");
+  console.log(rightOrWrongCN);
   return (
     <div className="App">
       <ToastContainer />
-      <h1 style={{ fontSize: "48px" }}>Horse or Dew?</h1>
+      <h1 style={{ fontSize: "48px" }}>Dew or Derby?</h1>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <h1>
-          Is this a name of a Kentucky Derby Horse or a Mountain Dew Flavor?
+          Is this a name of a Mountain Dew Flavor or a Kentucky Derby Horse?
         </h1>
         {lastResult !== null ? (
           <div
@@ -120,12 +123,24 @@ function App() {
               justifyContent: "center",
               alignItems: "center",
             }}
+            className={rightOrWrongCN}
           >
             <RightOrWrong result={lastResult} isHorse={lastData.isHorse} />
-            {lastData.name} is a{" "}
-            {lastData.isHorse
-              ? `Horse name ${horseEmoji}`
-              : `Mountain Dew flavor ${sodaEmoji}`}
+            <span style={{ fontWeight: "bold" }}>
+              {lastData.name}&nbsp;
+            </span>{" "}
+            <span>is a</span>
+            {lastData.isHorse ? (
+              <div>
+                <span style={{ fontWeight: "bold" }}> &nbsp;Horse</span>
+                <span>{` name ${horseEmoji}`}</span>
+              </div>
+            ) : (
+              <div>
+                <span style={{ fontWeight: "bold" }}> &nbsp;Mountain Dew</span>
+                <span>{` flavor ${sodaEmoji}`}</span>
+              </div>
+            )}
           </div>
         ) : (
           <div
@@ -173,6 +188,8 @@ function App() {
           onClick={(val) => {
             setResults([...results, val]);
             setCurQuestion(curQuestion + 1);
+            setTimeout(() => setIsFadingOut(true), 2000);
+            setIsFadingOut(false);
           }}
           name={cur.name}
           isHorse={cur.isHorse}
