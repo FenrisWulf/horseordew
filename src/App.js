@@ -106,7 +106,8 @@ function App() {
     toast("Copied to clipboard!", { hideProgressBar: true });
   };
 
-  const rightOrWrongCN = "rightOrWrong" + (isFadingOut ? " fadeOut" : "");
+  const rightOrWrongCN =
+    "rightOrWrong" + (isFadingOut === curQuestion - 1 ? " fadeOut" : "");
   console.log(rightOrWrongCN);
   return (
     <div className="App">
@@ -190,7 +191,7 @@ function App() {
           onClick={(val) => {
             setResults([...results, val]);
             setCurQuestion(curQuestion + 1);
-            setTimeout(() => setIsFadingOut(true), 2000);
+            setTimeout(() => setIsFadingOut(curQuestion), 2000);
             setIsFadingOut(false);
           }}
           name={cur.name}
